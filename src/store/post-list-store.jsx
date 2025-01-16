@@ -3,6 +3,7 @@ import { createContext, useReducer } from "react";
 export const PostList = createContext({
     postList: [], 
     addPost: () => {}, 
+    addInitialPosts: () => {},
     deletePost: () => {},
 });
 
@@ -12,7 +13,9 @@ const postListReducer = (currPostList, action) => {
     if(action.type === 'ADD_POST'){
         newPostList = [action.payload, ...currPostList];
     }
-
+    else if(action.type === 'ADD_INITIAL_POSTS'){
+        newPostList = action.payload.posts;
+    }
     else if(action.type === 'DELETE_POST'){
         newPostList = currPostList.filter((item) => {
             return item.id !== action.payload.postId;
@@ -24,8 +27,8 @@ const PostListProvider = ({children}) => {
 
     const [postList, dispatchPostList] = useReducer(postListReducer, []);
 
-    const addPost = (userId, postTitle, postBody, reactions, tags) => {
-        console.log(`${userId} ${postTitle} ${postBody} ${reactions} ${tags}`);
+    const addPost = (userId, postTitle, postBody, likes, tags) => {
+        // console.log(`${userId} ${postTitle} ${postBody} ${reactions} ${tags}`);
         
         const addPostAction = {
             type: "ADD_POST",
@@ -33,13 +36,27 @@ const PostListProvider = ({children}) => {
                 id: Date.now() ,
                 title: postTitle,
                 body: postBody,
-                reactions:reactions, 
+                reactions:{
+                    likes: likes,
+                },
                 userId: userId,
                 tags: tags,
             }
         }
         dispatchPostList(addPostAction);
     };
+
+    const addInitialPosts = (posts) => {
+        console.log(posts);
+        
+        dispatchPostList({
+            type:"ADD_INITIAL_POSTS",
+            payload: {
+                posts,
+            },
+        });
+    }
+    
 
     const deletePost = (postId) => {
         const deleteAction = {
@@ -56,6 +73,7 @@ const PostListProvider = ({children}) => {
             {
                 postList: postList, 
                 addPost: addPost, 
+                addInitialPosts: addInitialPosts,
                 deletePost: deletePost,
             }
         }>

@@ -4,7 +4,7 @@ const WelcomeMessage = ({onGetPostsClick}) => {
             <h1>Nothing In The Post List...</h1>
             <button 
             type="button" 
-            class="btn btn-primary"
+            className="btn btn-primary"
             onClick = {onGetPostsClick}
             >
             Get Post From Server

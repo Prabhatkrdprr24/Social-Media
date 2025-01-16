@@ -8,13 +8,12 @@ import PostList from "./components/PostList";
 import { useContext, useState } from "react";
 import PostListProvider from "./store/post-list-store";
 import {PostList as PostListData} from "./store/post-list-store";
-import WelcomeMessage from "./components/WelcomeMessage";
 
 function App() {
 
   const [selectedTab, setSelectedTab] = useState("Home");
 
-  const {postList} = useContext(PostListData);
+  const {postList, addInitialPosts} = useContext(PostListData);
 
   return (
     <PostListProvider>
@@ -22,7 +21,6 @@ function App() {
         <Sidebar selectedTab = {selectedTab} setSelectedTab = {setSelectedTab}></Sidebar>
         <div className="content">
           <Header></Header>
-          {postList.length === 0 && selectedTab === 'Home' && <WelcomeMessage></WelcomeMessage>}
           {selectedTab === 'Home' ? <PostList /> : <CreatePost setSelectedTab={setSelectedTab} ></CreatePost>}
           <Footer />
         </div>
