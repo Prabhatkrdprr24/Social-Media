@@ -20,15 +20,33 @@ const CreatePost = ({setSelectedTab}) => {
     const reactions = reactionsElement.current.value;
     const tags = tagsElement.current.value.split(' ');
 
-    addPost(userId, postTitle, postBody, reactions, tags);
+    console.log("sending post to server");
+    
+    fetch('https://dummyjson.com/posts/add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title: postTitle,
+        body: postBody,
+        reactions: reactions,
+        userId: userId,
+        tags: tags,
+      }),
+    })
+    .then(res => res.json())
+    .then(post => {
+      console.log("Got response from server", post);
+      
+      addPost(post);
+    });
 
-    userIdElement.current.value = "";
-    postTitleElement.current.value = "";
-    postBodyElement.current.value = "";
-    reactionsElement.current.value = "";
-    tagsElement.current.val = "";
+    // userIdElement.current.value = "";
+    // postTitleElement.current.value = "";
+    // postBodyElement.current.value = "";
+    // reactionsElement.current.value = "";
+    // tagsElement.current.val = "";
 
-    setSelectedTab("Home");
+    // setSelectedTab("Home");
   }
 
   return (
