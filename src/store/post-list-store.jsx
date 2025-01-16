@@ -20,28 +20,9 @@ const postListReducer = (currPostList, action) => {
     return newPostList;
 };
 
-const DEFAULT_POST_LIST = [
-    {
-        id: "1",
-        title: "Going to Mumbai",
-        body: "Hi Friends, I am going to Mumbai for my vacations. Hope to enjoy a lot. Peace out",
-        reactions: 2,
-        userId: "user-9",
-        tags: ['vacation', 'Mumbai', 'Enjoying'],
-    },
-    {
-        id: "2",
-        title: "Pass ho gaye bhai",
-        body: "4 sal ki masti k baad ho gaye hain pass. Hard to believe.",
-        reactions: 15,
-        userId: "user-12",
-        tags: ['Graduating', 'Unbelievable'],
-    },
-]
-
 const PostListProvider = ({children}) => {
 
-    const [postList, dispatchPostList] = useReducer(postListReducer, DEFAULT_POST_LIST);
+    const [postList, dispatchPostList] = useReducer(postListReducer, []);
 
     const addPost = (userId, postTitle, postBody, reactions, tags) => {
         console.log(`${userId} ${postTitle} ${postBody} ${reactions} ${tags}`);
