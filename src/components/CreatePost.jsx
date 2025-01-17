@@ -1,10 +1,12 @@
 import {PostList} from "../store/post-list-store";
 import { useContext } from "react";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CreatePost = ({setSelectedTab}) => {
 
   const { addPost } = useContext(PostList);
+  const navigate = useNavigate();
 
   const userIdElement = useRef();
   const postTitleElement = useRef();
@@ -38,15 +40,15 @@ const CreatePost = ({setSelectedTab}) => {
       console.log("Got response from server", post);
       
       addPost(post);
+      navigate("/");
     });
 
-    // userIdElement.current.value = "";
-    // postTitleElement.current.value = "";
-    // postBodyElement.current.value = "";
-    // reactionsElement.current.value = "";
-    // tagsElement.current.val = "";
+    userIdElement.current.value = "";
+    postTitleElement.current.value = "";
+    postBodyElement.current.value = "";
+    reactionsElement.current.value = "";
+    tagsElement.current.val = "";
 
-    // setSelectedTab("Home");
   }
 
   return (
