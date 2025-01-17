@@ -5,7 +5,6 @@ import { useEffect } from "react";
 export const PostList = createContext({
     postList: [], 
     addPost: () => {}, 
-    fetching: false,
     deletePost: () => {},
 });
 
@@ -64,32 +63,11 @@ const PostListProvider = ({children}) => {
         dispatchPostList(deleteAction);
     };
 
-    useEffect(() => {
-        setFetching(true);
-
-        const controller = new AbortController();
-        const signal = controller.signal;
-
-        fetch('https://dummyjson.com/posts', {signal})
-        .then(res => res.json())
-        .then(data => {
-            addInitialPosts(data.posts);
-            setFetching(false);
-        });
-
-        return () => {
-            console.log("Cleaning up UseEffect");
-            controller.abort();
-        };
-    }, []);
-
-
     return (
         <PostList.Provider value = {
             {
                 postList: postList, 
                 addPost: addPost, 
-                fetching,
                 deletePost: deletePost,
             }
         }>

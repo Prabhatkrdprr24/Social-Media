@@ -40,7 +40,7 @@ const CreatePost = ({setSelectedTab}) => {
       console.log("Got response from server", post);
       
       addPost(post);
-      navigate("/");
+      navigate("/"); 
     });
 
     userIdElement.current.value = "";
